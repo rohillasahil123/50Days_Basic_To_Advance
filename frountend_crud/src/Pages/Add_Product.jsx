@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Input_felds from '../Components/Input_felds'
 import Button from '../Components/Button'
+import { useNavigate } from 'react-router-dom'
 
 
 const Add_Product = () => {
@@ -12,6 +13,7 @@ const Add_Product = () => {
     category: "",
     description: ""
   })
+   const naviagte = useNavigate()
 
 useEffect(()=>{
  const d = JSON.parse(localStorage.getItem("editProduct")) || []
@@ -37,6 +39,7 @@ useEffect(()=>{
     }
    
     localStorage.setItem("product", JSON.stringify(OldProduct))
+    naviagte("/product-list")
     console.log(OldProduct)
   }
 

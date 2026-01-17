@@ -94,7 +94,7 @@ const ListProduct = () => {
                                         </div>
 
                                     </div>
-                                    <div className='h-[15vh] space-y-1 '>
+                                    <div className='h-[19vh] space-y-2 pt-[8%] '>
                                         <Button text="Edit" variant="green" onClick={() => handleEdit(index)} />
                                         <Button text="Delete" variant="red" onClick={() => handleDelete(index)} />
                                     </div>
