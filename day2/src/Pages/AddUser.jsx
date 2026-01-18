@@ -24,8 +24,6 @@ const AddUser = () => {
      if(n){
         setObj(n)
      }
-     
-
     },[])
 
 
