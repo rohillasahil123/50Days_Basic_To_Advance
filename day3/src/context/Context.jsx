@@ -32,9 +32,8 @@ const ContextCart = ({children}) => {
                     {...i ,qty :( i.qty || 1 ) + 1 } :
                     i
                 ))
-
         }else{
-            updated = [...prev , {product , qty : 1}]
+            updated = [...prev , {...product , qty : 1}]
         }
      
        localStorage.setItem("addCart" ,JSON.stringify(updated))
