@@ -15,15 +15,26 @@ const Home_Page = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         setObj((prev) => ({
             ...prev,
             [name]: value
         }));
     };
 
-    const handleAdd = () => {
-        console.log(obj);
+    const handleAdd = (e) => {
+        e.preventDefault()
+        const data = JSON.parse(localStorage.getItem("Task")) || []
+        console.log(data)
+        const updatedTask = [...data, obj]
+        localStorage.setItem("Task", JSON.stringify(updatedTask))
+        setObj({
+            title: "",
+            description: "",
+            priority: "",
+            status: "",
+            dueDate: "",
+            createdAt: Date.now()
+        })
     };
 
     return (
@@ -33,7 +44,7 @@ const Home_Page = () => {
 
                 <Input_felds name="title" value={obj.title} onChange={handleChange} placeholder="Title" autoComplete="off" />
                 <Input_felds name="description" value={obj.description} onChange={handleChange} placeholder="Description" autoComplete="off" />
-                <Input_felds name="priority" value={obj.priority} onChange={handleChange} placeholder="priority" autoComplete="off" />
+                <Input_felds name="priority" value={obj.priority} onChange={handleChange} placeholder="Priority" autoComplete="off" />
                 <select
                     name="status"
                     value={obj.status}
@@ -44,8 +55,8 @@ const Home_Page = () => {
                     <option value="pending">Pending</option>
                     <option value="complete">Complete</option>
                 </select>
-                {/* <Input_felds name="status" value={obj.status} onChange={handleChange} placeholder="status" autoComplete="off" /> */}
-                <Input_felds name="dueDate" value={obj.dueDate} onChange={handleChange} placeholder="dueDate" autoComplete="off" />
+             
+                <Input_felds name="dueDate" value={obj.dueDate} onChange={handleChange} placeholder="Due Date" autoComplete="off" />
 
                 <ButtonFields label="Add Product" onClick={handleAdd} />
             </div>
