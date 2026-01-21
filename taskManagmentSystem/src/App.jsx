@@ -1,10 +1,12 @@
 import React from 'react'
+import Navbar from './Pages/Navbar'
+import Home_Page from './Pages/Home_Page'
 
 const App = () => {
   return (
-    <div className='text-blue-800  font-bold text-4xl'>
-      <h1>Task managment</h1>
-      
+    <div>
+   <Navbar/>
+   <Home_Page/>
     </div>
   )
 }
