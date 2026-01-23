@@ -1,103 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Task_Page = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Learn React Basics",
-      description: "Revise useState, controlled inputs, and component structure.",
-      priority: "High Priority",
-      due: "25 Jan",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      title: "Practice Tailwind",
-      description: "Build cards and layouts using Tailwind CSS.",
-      priority: "Medium Priority",
-      due: "26 Jan",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      title: "Learn useEffect",
-      description: "Understand side effects and lifecycle in React.",
-      priority: "High Priority",
-      due: "27 Jan",
-      status: "Pending",
-    },
-    {
-      id: 4,
-      title: "JavaScript Revision",
-      description: "Revise array methods and ES6 concepts.",
-      priority: "Low Priority",
-      due: "28 Jan",
-      status: "Pending",
-    },
-    {
-      id: 5,
-      title: "Build Todo App",
-      description: "Create a simple CRUD Todo application.",
-      priority: "High Priority",
-      due: "29 Jan",
-      status: "Pending",
-    },
-    {
-      id: 6,
-      title: "API Integration",
-      description: "Fetch data using fetch / axios.",
-      priority: "Medium Priority",
-      due: "30 Jan",
-      status: "Pending",
-    },
-    {
-      id: 7,
-      title: "React Router",
-      description: "Learn routing and navigation.",
-      priority: "Medium Priority",
-      due: "31 Jan",
-      status: "Pending",
-    },
-    {
-      id: 8,
-      title: "Redux Basics",
-      description: "Understand global state management.",
-      priority: "Low Priority",
-      due: "1 Feb",
-      status: "Pending",
-    },
-    {
-      id: 9,
-      title: "Project Cleanup",
-      description: "Refactor code and improve folder structure.",
-      priority: "Low Priority",
-      due: "2 Feb",
-      status: "Pending",
-    },
-    {
-      id: 10,
-      title: "Deployment",
-      description: "Deploy React app on Netlify/Vercel.",
-      priority: "High Priority",
-      due: "3 Feb",
-      status: "Pending",
-    },
-  ]);
+  const [tasks, setTasks] = useState([])
+  const navigate = useNavigate()
 
-  const handleDelete = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("Task")) || []
+    setTasks(data)
+  }, [])
+
+
+useEffect(() => {
+    console.log(tasks , "statte")
+  }, [tasks])
+
+
+const handleDelete = (index) => {
+  const updel = tasks.filter((_, i) => i !== index);
+  setTasks(updel);
+  localStorage.setItem( "Task" , JSON.stringify(updel ))
+};
+
 
   const handleEdit = (id) => {
-    alert(`Edit task with id: ${id}`);
+   const editTask = tasks[id]
+    localStorage.setItem("editTask", JSON.stringify(editTask))
+    localStorage.setItem("editIndex", JSON.stringify(id))
+    navigate("/") 
   };
 
   return (
     <div className="bg-gray-300 min-h-screen w-full pt-14">
+{
+      tasks.length === 0  ?
+  <div className="w-full flex flex-wrap justify-center gap-6 p-6"> 
+  <h1 className="text-center items-center text-3xl font-bold text-teal-700">
+  No product in your List 
+ </h1> 
+  </div> : (
+    
       <div className="w-full flex flex-wrap justify-center gap-6 p-6">
-        {tasks.map((task) => (
+        {tasks.map((task , id) => (
           <div
-            key={task.id}
+            key={id}
             className="bg-white w-[320px] rounded-lg shadow-md overflow-hidden"
           >
             {/* Header */}
@@ -115,7 +61,7 @@ const Task_Page = () => {
                 <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded">
                   {task.priority}
                 </span>
-                <span className="text-gray-500">Due: {task.due}</span>
+                <span className="text-gray-500">Due: {task.dueDate}</span>
               </div>
 
               <div className="flex justify-between items-center mt-4">
@@ -125,13 +71,13 @@ const Task_Page = () => {
 
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => handleEdit(task.id)}
+                    onClick={() => handleEdit(id)}
                     className="text-sm px-3 py-1 bg-blue-500 text-white rounded"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(task.id)}
+                    onClick={() => handleDelete(id)}
                     className="text-sm px-3 py-1 bg-red-500 text-white rounded"
                   >
                     Delete
@@ -142,6 +88,7 @@ const Task_Page = () => {
           </div>
         ))}
       </div>
+  )} 
     </div>
   );
 };
