@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input_felds from "../Components/Input_felds";
 import ButtonFields from "../Components/ButtonFields";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 const Home_Page = () => {
   const [obj, setObj] = useState({
@@ -25,6 +26,15 @@ const Home_Page = () => {
     }
   }, []);
 
+ useEffect(()=>{
+const handleData =async ()=>{
+    const data = await axios.get("https://dummyjson.com/todos")
+    console.log(data.data.todos , "Api")
+}
+handleData()
+ },[])
+
+
   // 👉 Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,9 +47,7 @@ const Home_Page = () => {
   // 👉 Add / Update task
   const handleAdd = (e) => {
     e.preventDefault();
-
     const data = JSON.parse(localStorage.getItem("Task")) || [];
-
     if (index !== null) {
       // UPDATE
       data[index] = obj;

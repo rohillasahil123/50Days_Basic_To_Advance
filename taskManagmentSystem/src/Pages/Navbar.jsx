@@ -12,7 +12,7 @@ const Navbar = () => {
     <div className='h-14 w-full flex bg-teal-800 shadow-md fixed '>
       <div className=' flex h-full w-full justify-between  '>
         <div className='pl-8 flex justify-center items-center text-2xl font-bold text-white' >
-          <h1 className='' >Logo</h1>
+          <h1 className=''> <Link to="/" > Logo </Link> </h1>
         </div>
       
          <div className='md:flex hidden  space-x-5 gap-3 items-center justify-center pr-9 text-white font-semibold text-lg ' >

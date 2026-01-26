@@ -1,21 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input_felds from "../Components/Input_felds";
+import axios from "axios";
 
 const Task_Page = () => {
   const [tasks, setTasks] = useState([])
   const [search, setSearch] = useState("")
+  const [error , setError] = useState(false)
+  const [loading , setLoading] = useState(false)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("Task")) || []
-    setTasks(data)
-  }, [])
+  // useEffect(() => {
+  //   const data = JSON.parse(localStorage.getItem("Task")) || []
+  //   setTasks(data)
+  // }, [])
 
 
-  useEffect(() => {
+  const FilterTask =  tasks.filter((task) => task.title.toLowerCase().includes(search.toLocaleLowerCase()))||tasks.filter((task) => task.description.toLowerCase().includes(search.toLocaleLowerCase()))
+
+  const gernateApiDataFromManual = (todos)=>{
+    return todos.map((item)=>({
+      title : item.todo ,
+      description: "Get Data from APi" ,
+      dueDate : "False" ,
+      priority : item.completed ? "High" : "Low",
+      status : item.completed ? "complete" : "Panding" ,
+      createdAt : Date.now()
+    }))
+  }
+
+
+   useEffect(()=>{
+const handleData =async ()=>{
+  try {
+    setLoading(true)
+    setError("")
+    const fetchApiData = await axios.get("https://dummyjson.com/todos")
+    const data = gernateApiDataFromManual(fetchApiData.data.todos)
+    localStorage.setItem("Task" , JSON.stringify(data))
+    setTasks(data )
+  } catch (error) {
+    setError("Api not working and data not showig")
+  }finally{
+    setLoading(false)
+  }
+}
+handleData()
+ },[])
+
+
+
+
+   useEffect(() => {
     console.log(tasks, "statte")
   }, [tasks])
+
 
   const handleDelete = (id) => {
     const product = tasks.filter((_, i) => i !== id)
@@ -23,10 +62,6 @@ const Task_Page = () => {
     setTasks(product)
     localStorage.setItem("Task", JSON.stringify(product))
   }
-
-
-  const FilterTask =  tasks.filter((task) => task.title.toLowerCase().includes(search.toLocaleLowerCase()))||tasks.filter((task) => task.description.toLowerCase().includes(search.toLocaleLowerCase()))
-
 
 
   const handleEdit = (id) => {
@@ -56,8 +91,6 @@ const Task_Page = () => {
               No product in your List
             </h1>
           </div> : (
-
-
             <div className="w-full flex flex-wrap justify-center gap-6 p-6">
 
 
@@ -109,6 +142,20 @@ const Task_Page = () => {
               ))}
             </div>
           )}
+              {loading && (
+  <p className="text-center text-xl font-semibold mt-10">
+    Loading tasks...
+  </p>
+)}
+
+  {error && (
+  <p className="text-center text-red-600 mt-6">
+    {error}
+  </p>
+)}
+
+
+
     </div>
   );
 };
