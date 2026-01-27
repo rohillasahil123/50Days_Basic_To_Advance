@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.input {
+  @apply w-full border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-800;
+}
