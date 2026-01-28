@@ -5,12 +5,13 @@ import Footer from "./components/Footer";
 import About from "./Pages/About";
 import Features from "./Pages/FeaturesSection";
 // import Admin from "./pages/Admin";
-import Login from "./Pages/Login";
+import Login from "./Admin/Login";
 import Home_All_Page from "./components/Home_All_Page";
 import Gallery from "./Pages/Gallery";
 import Notice_Page from "./Pages/Notice_Page";
 import Admissions from "./Pages/Admissions";
 import NotFound from "./Pages/NotFound";
+import AdminNotice from "./Admin/AdminNotice";
 
 function App() {
   return (
@@ -23,10 +24,10 @@ function App() {
         <Route path="/gallery" element={<Gallery/>}/>
         <Route path="/notices" element={<Notice_Page/>}/>
         <Route path="/admissions" element={<Admissions/>}/>
-        {/* <Route path="/admin" element={<Admin />} /> */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Login />} />
 
-
+        {/* Admin Route */}
+        <Route path="/adminNotice" element={<AdminNotice/>}/>
 
 
          <Route path="*" element={<NotFound />} />

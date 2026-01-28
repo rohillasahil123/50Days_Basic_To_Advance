@@ -1,31 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { NoticeContext } from "../context/NoticeContext";
 
 const Notice_Page = () => {
   const [search, setSearch] = useState("");
-
-  const notices = [
-    {
-      id: 1,
-      title: "Holiday on Independence Day",
-      date: "15 Aug 2026",
-      category: "Holiday",
-      isNew: true,
-    },
-    {
-      id: 2,
-      title: "Class 10 Exam Date Sheet",
-      date: "20 Aug 2026",
-      category: "Exam",
-      isNew: false,
-    },
-    {
-      id: 3,
-      title: "Admission Open for Session 2026",
-      date: "01 Sep 2026",
-      category: "Admission",
-      isNew: true,
-    },
-  ];
+  const {notices} = useContext(NoticeContext)
+ 
 
   const filteredNotices = notices.filter((n) =>
     n.title.toLowerCase().includes(search.toLowerCase())
@@ -61,9 +40,9 @@ const Notice_Page = () => {
               No notices found
             </p>
           ) : (
-            filteredNotices.map((notice) => (
+            filteredNotices.map((notice , index) => (
               <div
-                key={notice.id}
+                key={index}
                 className="bg-white rounded-lg shadow hover:shadow-lg transition"
               >
                 <div className="p-5">
@@ -71,7 +50,7 @@ const Notice_Page = () => {
                     <h2 className="text-xl font-semibold text-blue-800">
                       {notice.title}
                     </h2>
-                    {notice.isNew && (
+                    { notice.check && (
                       <span className="text-xs bg-red-500 text-white px-2 py-1 rounded">
                         NEW
                       </span>
