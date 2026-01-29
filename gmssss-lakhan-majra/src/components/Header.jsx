@@ -7,7 +7,7 @@ const Header = () => {
     const {role} = useContext(RoleContext)
   return (
     <>
-        role === "admin" ? <AdminHeader/> : <Navbar/>
+      {  role === "admin" ? <AdminHeader/> : <Navbar/>}
     </>
   )
 }

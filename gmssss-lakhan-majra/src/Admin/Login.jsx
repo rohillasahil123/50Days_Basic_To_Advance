@@ -16,7 +16,7 @@ const navigate = useNavigate()
 
     useEffect(() => {
     if (role === "admin") {
-      navigate("/adminNotice");
+      navigate("/admin");
     }
   }, [role]);
 
